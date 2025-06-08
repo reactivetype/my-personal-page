@@ -1,5 +1,5 @@
 import type { Route } from "./+types/photography";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -201,6 +201,30 @@ export default function Photography() {
     setSelectedPhoto(filteredPhotos[prevIndex]);
   };
 
+  // Keyboard event handling for modal
+  useEffect(() => {
+    if (!selectedPhoto) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      switch (event.key) {
+        case 'Escape':
+          closeLightbox();
+          break;
+        case 'ArrowLeft':
+          event.preventDefault();
+          prevPhoto();
+          break;
+        case 'ArrowRight':
+          event.preventDefault();
+          nextPhoto();
+          break;
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [selectedPhoto, currentSlideIndex, filteredPhotos]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
@@ -328,11 +352,18 @@ export default function Photography() {
 
       {/* Lightbox Modal */}
       {selectedPhoto && (
-        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4">
-          <div className="relative max-w-4xl w-full">
+        <div 
+          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+          onClick={closeLightbox}
+        >
+          <div 
+            className="relative max-w-4xl w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Close Button */}
             <button
               onClick={closeLightbox}
+              aria-label="Close modal"
               className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -343,6 +374,7 @@ export default function Photography() {
             {/* Navigation Buttons */}
             <button
               onClick={prevPhoto}
+              aria-label="Previous photo"
               className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -351,6 +383,7 @@ export default function Photography() {
             </button>
             <button
               onClick={nextPhoto}
+              aria-label="Next photo"
               className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

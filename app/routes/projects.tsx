@@ -1,4 +1,5 @@
 import type { Route } from "./+types/projects";
+import { useState } from "react";
 import { Link } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
@@ -74,6 +75,12 @@ const projects = [
 const categories = ["All", "Research", "Industry"];
 
 export default function Projects() {
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+
+  const filteredProjects = projects.filter(project => 
+    selectedCategory === "All" || project.category === selectedCategory
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
@@ -96,7 +103,12 @@ export default function Projects() {
             {categories.map((category) => (
               <button
                 key={category}
-                className="px-4 py-2 text-sm font-medium rounded-md transition-colors bg-ocean-blue text-white"
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                  selectedCategory === category
+                    ? "bg-ocean-blue text-white"
+                    : "text-gray-600 hover:text-ocean-blue hover:bg-gray-50"
+                }`}
               >
                 {category}
               </button>
@@ -109,7 +121,7 @@ export default function Projects() {
       <section className="px-4 sm:px-6 lg:px-8 pb-16">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project) => (
+            {filteredProjects.map((project) => (
               <div
                 key={project.id}
                 className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group"
