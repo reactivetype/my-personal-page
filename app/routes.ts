@@ -7,4 +7,7 @@ export default [
   route("publications", "routes/publications.tsx"),
   route("publications/:id", "routes/publications.$id.tsx"),
   route("photography", "routes/photography.tsx"),
+  route("books", "routes/books.tsx"),
+  route("books/:slug", "routes/books.$slug.tsx"),
+  route("books/success", "routes/books.success.tsx"),
 ] satisfies RouteConfig;

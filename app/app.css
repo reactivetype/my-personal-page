@@ -5,9 +5,9 @@
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   
   /* Light Zen Theme Colors */
-  --color-ocean-blue: #9ca3af;
-  --color-ocean-light: #f8f9fa;
-  --color-ocean-dark: #6b7280;
+  --color-ocean-blue: #3B82F6;
+  --color-ocean-light: #EBF4FF;
+  --color-ocean-dark: #1E40AF;
 }
 
 html,
@@ -36,4 +36,44 @@ body {
 /* Smooth transitions */
 * {
   @apply transition-colors duration-200;
+}
+
+/* Line clamp utilities for text truncation */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* Book card hover effects */
+.book-card {
+  @apply transform transition-all duration-300 ease-in-out;
+}
+
+.book-card:hover {
+  @apply scale-105 shadow-xl;
+}
+
+/* Gradient backgrounds */
+.gradient-blue {
+  background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
+}
+
+.gradient-gray {
+  background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);
 }

@@ -103,6 +103,9 @@ dist
 tmp/
 temp/
 
+# Documentation (internal business docs)
+docs/
+
 # Cline related files
 .cline/
 cline_docs/
