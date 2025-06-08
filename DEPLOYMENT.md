@@ -10,9 +10,10 @@ This guide will help you deploy your React Router v7 website to Vercel with anal
 
 ## What's Already Configured
 
-✅ **vercel.json** - Deployment configuration for React Router v7 SSR
+✅ **vercel.json** - Fixed deployment configuration for React Router v7 SSR
 ✅ **Vercel Analytics** - Integrated into your app for visitor tracking
 ✅ **Build process** - Tested and working
+✅ **Server function** - Properly configured for Node.js runtime
 
 ## Step-by-Step Deployment
 
@@ -97,6 +98,12 @@ Add environment variables in Vercel dashboard:
 - Check build logs in Vercel dashboard
 - Ensure all dependencies are in package.json
 - Test build locally: `npm run build`
+
+### Function Pattern Error (FIXED)
+If you see: `Error: The pattern "app/routes/**" defined in functions doesn't match any Serverless Functions`
+- This has been fixed in the updated `vercel.json`
+- The configuration now properly points to `build/server/index.js`
+- Re-deploy after pushing the updated configuration
 
 ### Analytics Not Working
 - Check browser console for errors
